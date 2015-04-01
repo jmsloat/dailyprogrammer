@@ -5,21 +5,24 @@ import java.util
 import java.util.ArrayList
 
 
-public fun main(args: Array<String>) {
+fun main(args: Array<String>) {
 
-    val a = AsciiGrid()
-    a.readGrid()
+    AsciiGrid()
 }
 
 class AsciiGrid  {
 
-    data class Grid(width: Int, height: Int, contents: Array<Array<Char>> )
+    var grid: Grid = readGrid()
 
+    init {
+        printGrid(grid)
+    }
 
-    fun readGrid() {
+    data class Grid(val width: Int = -1, val height: Int = -1, var contents: Array<Array<Char>>)
 
-        val infile = File("infile.txt")
-        val lines = infile.readLines()
+    fun readGrid() : Grid {
+
+        val lines = File("infile.txt").readLines()
 
         for(line in lines) {
             println(line)
@@ -27,8 +30,21 @@ class AsciiGrid  {
 
         val (w, h) = lines.get(0).split(' ')
 
+        val cols = Array(w.toInt(), {it -> '.'})
+        val chars = Array(h.toInt(), {it -> cols.copyOf()})
 
-       //val grid = Grid(lines.get(0).toCharArray())
+        return Grid(w.toInt(), h.toInt(), chars)
+    }
+
+    fun printGrid(g: Grid): Unit {
+        g.contents[2].set(3, 'H')
+
+        for(row in g.contents) {
+            for(col in row) {
+                print(col.toString())
+            }
+            println("")
+        }
     }
 
 }
