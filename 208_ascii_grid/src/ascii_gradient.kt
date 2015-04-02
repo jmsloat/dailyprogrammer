@@ -4,6 +4,8 @@ import java.io.File
 import java.util
 import java.util.ArrayList
 
+import kotlin.*
+
 
 fun main(args: Array<String>) {
 
@@ -12,23 +14,20 @@ fun main(args: Array<String>) {
 
 class AsciiGrid  {
 
-    var grid: Grid = readGrid()
+    val inputLines = File("infile.txt").readLines()
+    var grid: Grid = readGrid(inputLines.get(0))
+    val gradiekkntCharacters = inputLines.get(1).toCharList()
 
     init {
         printGrid(grid)
+        calculateGradient(grid)
     }
 
     data class Grid(val width: Int = -1, val height: Int = -1, var contents: Array<Array<Char>>)
 
-    fun readGrid() : Grid {
+    fun readGrid(line: String) : Grid {
 
-        val lines = File("infile.txt").readLines()
-
-        for(line in lines) {
-            println(line)
-        }
-
-        val (w, h) = lines.get(0).split(' ')
+        val (w, h) = line.split(' ')
 
         val cols = Array(w.toInt(), {it -> '.'})
         val chars = Array(h.toInt(), {it -> cols.copyOf()})
@@ -45,6 +44,10 @@ class AsciiGrid  {
             }
             println("")
         }
+    }
+
+    fun calculateGradient(g: Grid) {
+        print("Going...")
     }
 
 }
